@@ -216,7 +216,7 @@ Date:   Tue Mar 28 00:26:53 2023 +0300
 flowchart LR
 
 A[Untracked] -->|git add| B[Staged + Tracked]
-B -->|git commit|  C[Tracked]
+B -->|git commit| C[Tracked]
 C -->|Изменения| D[modified]
 D -->|git add| B
 
