@@ -221,3 +221,71 @@ C -->|Изменения| D[modified]
 D -->|git add| B
 
 ```
+
+1. Файл только что создали. Git ещё не отслеживает содержимое этого файла. Состояние: untracked.
+2. Файл добавили в staging area с помощью git add. Состояние: staged (+ tracked).
+- Возможно, изменили файл ещё раз. Состояния: staged, modified (+ tracked). 
+- Обратите внимание: staged и modified у одного файла, но у разных его версий.
+- Ещё раз выполнили git add. Состояние: staged (+ tracked).
+3. Сделали коммит с помощью git commit. Состояние: tracked.
+4. Изменили файл. Состояние: modified (+ tracked).
+5. Cнова добавили в staging area с помощью git add. Состояния: staged (+ tracked).
+6. Сделали коммит. Состояния: tracked.
+7. Повторили пункты 4−7 много-много раз.
+
+### Как читать git status
+
+Типичные варианты вывода git status:
+
+
+1. Нет ни staged-, ни modified-, ни untracked-файлов.
+
+```Bash
+$ git status
+On branch master
+nothing to commit, working tree clean 
+```
+
+2. Найдены неотслеживаемые файлы.
+
+```Bash
+$ touch fileA.txt
+$ git status
+On branch master
+Untracked files: # найдены неотслеживаемые файлы
+  (use "git add <file>..." to include in what will be committed)
+        fileA.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+```
+
+3. Найдены изменения, которые не войдут в коммит
+
+```Bash
+# внесли в fileA.txt правки
+# запросили статус
+$ git status 
+On branch master
+Changes not staged for commit: # ещё одна секция
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   fileA.txt
+
+```
+
+4. Файл добавлен в staging area, но после этого изменён
+
+```Bash
+# изменили fileA.txt
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+          modified:   fileA.txt
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+          modified:   fileA.txt
+```
